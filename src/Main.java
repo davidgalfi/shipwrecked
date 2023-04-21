@@ -3,6 +3,15 @@ import controller.Controller;
 import java.util.Scanner;
 
 public class Main {
+    public static boolean isGoodNumber(String number){
+        int converted_number;
+        try {
+            converted_number = Integer.parseInt(number);
+            return converted_number <= 22 && converted_number >= 0;
+        } catch (NumberFormatException e){
+            return false;
+        }
+    }
     public static void main(String[] args) {
         // controller instantiation
         Controller controller = new Controller();
@@ -16,7 +25,7 @@ public class Main {
             controller.startMenu();
             // waiting for the players answer
             // If did not give a correct answer: ask again
-            answer = sc.next();
+            answer = sc.next().toLowerCase();
         } while(!(answer.equals("yes")) && !(answer.equals("no")));
 
         if(answer.equals("yes")){
@@ -26,11 +35,17 @@ public class Main {
             System.out.print("\n<Enter>");
             sc.nextLine();
             sc.nextLine();
+            controller.whatPlayerCanDo();
             int index = 0;
             while(!controller.isPlayerDead() && !controller.isPlayerSaved()){
-                controller.conditionCheck();
-                controller.detailsWrite();
-                controller.killPlayer();
+                do {
+                    controller.detailsWrite();
+                    System.out.print("\n\nWhat do you do: ");
+                    answer = sc.nextLine();
+                }while(!isGoodNumber(answer));
+                controller.playerDoSomething(answer);
+                System.out.print("\n<Enter>");
+                sc.nextLine();
             }
         } else {
             System.exit(0);

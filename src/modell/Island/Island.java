@@ -1,7 +1,7 @@
 package modell.Island;
 
 import modell.Island.Animal.Animal;
-import java.lang.Math;
+
 import java.util.Random;
 
 public class Island {
@@ -17,7 +17,7 @@ public class Island {
     * 3) woods number [min = 15, max = 40]
     * 4) fruit woods number [ min = 3, max = 20]
     * 5) waters number [min = 0, max = 3]
-    * 6) clays number[min = 5, max = 30]*/
+    * 6) clays number[min = 5, max = 20]*/
     public Island(){
         setAnimal(new Animal());
         setMaterial(new Material());
@@ -26,13 +26,19 @@ public class Island {
         animal.setBear_number(rand.nextInt(17) + 4);
         animal.setRabbit_number(rand.nextInt(21) + 10);
         material.setWood_number(rand.nextInt(26) + 15);
-        material.setFruit_wood_number(rand.nextInt(18) + 3);
+        material.setFruit_tree_number(rand.nextInt(18) + 3);
         material.setWater_number(rand.nextInt(4));
-        material.setClay_number(rand.nextInt(26) + 5);
+        material.setClay_number(rand.nextInt(16) + 5);
 
         // set the number of sources that the player know
-        animal.setKnow_bear(0);
-        animal.setKnow_rabbit(0);
+        // animals:
+        animal.setKnow_bear(0); // 0
+        animal.setKnow_rabbit(1); // 1
+
+        // materials:
+        material.setKnow_tree_number(4); // 4
+        material.setKnow_fruit_tree_number(1); // 1
+        material.setKnow_water_number(0); // 0
     }
 
     // getters and setters
