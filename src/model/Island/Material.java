@@ -1,4 +1,4 @@
-package modell.Island;
+package model.Island;
 
 public class Material{
     // How many are of them on the island

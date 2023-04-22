@@ -1,6 +1,6 @@
-package modell.Island;
+package model.Island;
 
-import modell.Island.Animal.Animal;
+import model.Island.Animal.Animal;
 
 import java.util.Random;
 

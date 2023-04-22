@@ -1,7 +1,7 @@
-package modell.Player.Tool;
+package model.Player.Tool;
 
 public class Torch extends Tool{
-    private boolean have_torch = false;
+    private boolean have_torch = false; // false
 
     // getters and setters:
     public boolean isHave_torch() {

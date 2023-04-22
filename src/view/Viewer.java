@@ -36,7 +36,7 @@ public class Viewer {
                 + "\n| Known animals: " + "\t\tBears: " + bear +"\tRabbits: " + rabbit);
         System.out.println("--------------------------------------------------------------------------------------------------------");
     }
-
+    // Printing actions that the player can make
     public void whatPlayerCanDo(){
         System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println("Write this again(0)");

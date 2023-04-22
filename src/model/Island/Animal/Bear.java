@@ -1,6 +1,5 @@
-package modell.Island.Animal;
+package model.Island.Animal;
 
-import modell.Island.Material;
 import java.lang.Math;
 
     public class Bear extends Animal{

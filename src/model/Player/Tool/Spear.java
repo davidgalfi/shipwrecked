@@ -1,4 +1,4 @@
-package modell.Player.Tool;
+package model.Player.Tool;
 
 import java.lang.Math;
 public class Spear extends Tool{

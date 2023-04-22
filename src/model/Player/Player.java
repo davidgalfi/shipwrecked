@@ -1,8 +1,10 @@
-package modell.Player;
+package model.Player;
 
-import modell.Player.Building.Building;
-import modell.Player.Building.Fire;
-import modell.Player.Tool.*;
+import model.Player.Building.Fire;
+import model.Player.Building.House;
+import model.Player.Building.Hut;
+import model.Player.Building.Shelter;
+import model.Player.Tool.*;
 
 public class Player {
     // All objects:
@@ -13,6 +15,9 @@ public class Player {
     private Fishingrod rod;
     // Buildings:
     private Fire fire;
+    private Shelter shelter;
+    private Hut hut;
+    private House house;
     // Health:
     private int health;
     private int fatigue;
@@ -36,13 +41,16 @@ public class Player {
         setVessel(new Vessel());
         setRod(new Fishingrod());
         setFire(new Fire());
+        setShelter(new Shelter());
+        setHut(new Hut());
+        setHouse(new House());
         setHealth(100); // 100
         setFatigue(10); // 10
         setThirst(5); // 5
         setHunger(5); // 5
         setStarving(false); // false
         setClay(0); // 0
-        setWood(0); // 0
+        setWood(100); // 0 // test: 100
         setFruit(1); // 1
         setRaw_meat(0); // 0
         setRoast_meat(1); // 1
@@ -87,6 +95,28 @@ public class Player {
     public void setFire(Fire fire) {
         this.fire = fire;
     }
+    // shelter:
+    public Shelter getShelter() {
+        return shelter;
+    }
+    public void setShelter(Shelter shelter) {
+        this.shelter = shelter;
+    }
+    // hut:
+    public Hut getHut() {
+        return hut;
+    }
+    public void setHut(Hut hut) {
+        this.hut = hut;
+    }
+    // house:
+    public House getHouse() {
+        return house;
+    }
+    public void setHouse(House house) {
+        this.house = house;
+    }
+    // conditions:
     // fatigue:
     public int getFatigue() {
         return fatigue;
