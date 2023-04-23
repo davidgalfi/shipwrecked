@@ -5,6 +5,8 @@ import model.Island.Island;
 import model.Player.Player;
 import view.*;
 import java.lang.Math;
+import java.sql.SQLOutput;
+import java.util.Random;
 
 public class Controller {
     // All object:
@@ -83,25 +85,31 @@ public class Controller {
                 break;
             // Cutting a tree
             case 1:
-                // Checking if the player knows which tree to cut.
-                if(island.getMaterial().getKnow_tree_number() > 0){
-                    // Checking if there is no tree left on the island --> not necessary by the way...
-                    if(island.getMaterial().getWood_number() != 0){
-                        // Sending the number of hours that the action takes
-                        doneSomething(8);
-                        // Changing the number of trees on the island and give woods to the player
-                        int wood = player.getWood();
-                        player.setWood(wood + 8);
-                        int tree = island.getMaterial().getKnow_tree_number();
-                        island.getMaterial().setKnow_tree_number(tree - 1);
-                        tree = island.getMaterial().getWood_number();
-                        island.getMaterial().setWood_number(tree - 1);
-                        System.out.println("\nYou cut down a tree! You collected 8 wood...");
+                // Checking if it's dark
+                if(!time.isNight() || player.getTorch().isHave_torch()){
+                    // Checking if the player knows which tree to cut.
+                    if(island.getMaterial().getKnow_tree_number() > 0){
+                        // Checking if there is no tree left on the island --> not necessary by the way...
+                        if(island.getMaterial().getTree_number() != 0){
+                            // Sending the number of hours that the action takes
+                            doneSomething(8);
+                            // Changing the number of trees on the island and give woods to the player
+                            int wood = player.getWood();
+                            player.setWood(wood + 8);
+                            int tree = island.getMaterial().getKnow_tree_number();
+                            island.getMaterial().setKnow_tree_number(tree - 1);
+                            tree = island.getMaterial().getTree_number();
+                            island.getMaterial().setTree_number(tree - 1);
+                            System.out.println("\nYou cut down a tree! You collected 8 wood...");
+                        } else {
+                            System.out.println("There is no tree left on the island!");
+                        }
                     } else {
-                        System.out.println("There is no tree left on the island!");
+                        System.out.println("\nYou did not discover trees!");
                     }
                 } else {
-                    System.out.println("\nYou did not discover trees!");
+                    System.out.println("It's too dark! At times like this, I can only eat" +
+                            ", drink or sleep.");
                 }
                 break;
             // Sleeping action
@@ -144,18 +152,23 @@ public class Controller {
                 break;
             // Mining clay
             case 3:
-                // Checking if there is no clay left on the island
-                if(island.getMaterial().getClay_number() != 0){
-                    // Sending the number of hours that the action takes
-                    doneSomething(2);
-                    // Give clays to the player, and decrease the number of clays by one
-                    System.out.println("\nYou mined! You collected 5 clay");
-                    int clay = player.getClay();
-                    player.setClay(clay + 5);
-                    clay = island.getMaterial().getClay_number();
-                    island.getMaterial().setClay_number(clay - 1);
+                if(!time.isNight() || player.getTorch().isHave_torch()){
+                    // Checking if there is no clay left on the island
+                    if(island.getMaterial().getClay_number() != 0){
+                        // Sending the number of hours that the action takes
+                        doneSomething(2);
+                        // Give clays to the player, and decrease the number of clays by one
+                        System.out.println("\nYou mined! You collected 5 clay");
+                        int clay = player.getClay();
+                        player.setClay(clay + 5);
+                        clay = island.getMaterial().getClay_number();
+                        island.getMaterial().setClay_number(clay - 1);
+                    } else {
+                        System.out.println("There is no clay left on the island!");
+                    }
                 } else {
-                    System.out.println("There is no clay left on the island!");
+                    System.out.println("It's too dark! At times like this, I can only eat" +
+                            ", drink or sleep.");
                 }
                 break;
             // Craft a torch
@@ -260,67 +273,320 @@ public class Controller {
                 break;
             // Make a shelter
             case 8:
-                // Checking if the player already has a shelter
-                if(!player.getShelter().isHave_shelter()){
-                    // Checking if player has enough woods
-                    if(player.getWood() >= 14){
-                        // Sending the number of hours that the action takes
-                        doneSomething(12);
-                        // Make a shelter and reduce the number of woods that the player has
-                        player.getShelter().setHave_shelter(true);
-                        int wood = player.getWood() - 12;
-                        player.setWood(wood);
-                        System.out.println("You have a shelter now! It's gonna be a bit conformable...");
+                if(!time.isNight() || player.getTorch().isHave_torch()){
+                    // Checking if the player already has a shelter
+                    if(!player.getShelter().isHave_shelter()){
+                        // Checking if player has enough woods
+                        if(player.getWood() >= 14){
+                            // Sending the number of hours that the action takes
+                            doneSomething(12);
+                            // Make a shelter and reduce the number of woods that the player has
+                            player.getShelter().setHave_shelter(true);
+                            int wood = player.getWood() - 12;
+                            player.setWood(wood);
+                            System.out.println("You have a shelter now! It's gonna be a bit conformable...");
+                        } else {
+                            System.out.println("You have not enough wood!");
+                        }
                     } else {
-                        System.out.println("You have not enough wood!");
+                        System.out.println("You already have a shelter!");
                     }
                 } else {
-                    System.out.println("You already have a shelter!");
+                    System.out.println("It's too dark! At times like this, I can only eat" +
+                            ", drink or sleep.");
                 }
                 break;
             // Make a hut
             case 9:
-                // Checking if the player already has a hut
-                if(!player.getHut().isHave_hut()){
-                    // Checking if player has enough woods
-                    if(player.getWood() >= 32){
-                        // Sending the number of hours that the action takes
-                        doneSomething(26);
-                        // Make a shut and reduce the number of woods that the player has
-                        player.getHut().setHave_hut(true);
-                        int wood = player.getWood() - 32;
-                        player.setWood(wood);
-                        System.out.println("You have a hut now! It's gonna be conformable now!");
+                if(!time.isNight() || player.getTorch().isHave_torch()){
+                    // Checking if the player already has a hut
+                    if(!player.getHut().isHave_hut()){
+                        // Checking if player has enough woods
+                        if(player.getWood() >= 32){
+                            // Sending the number of hours that the action takes
+                            doneSomething(26);
+                            // Make a shut and reduce the number of woods that the player has
+                            player.getHut().setHave_hut(true);
+                            int wood = player.getWood() - 32;
+                            player.setWood(wood);
+                            System.out.println("You have a hut now! It's gonna be conformable now!");
+                        } else {
+                            System.out.println("You have not enough wood!");
+                        }
                     } else {
-                        System.out.println("You have not enough wood!");
+                        System.out.println("You already have a hut!");
                     }
                 } else {
-                    System.out.println("You already have a hut!");
+                    System.out.println("It's too dark! At times like this, I can only eat" +
+                            ", drink or sleep.");
                 }
                 break;
             // Make a house
             case 10:
-                // Checking if the player already has a house
-                if(!player.getHouse().isHave_house()){
-                    // Checking if player has enough woods
-                    if(player.getWood() >= 32 && player.getClay() >= 12){
-                        // Sending the number of hours that the action takes
-                        doneSomething(34);
-                        // Make a shut and reduce the number of woods that the player has
-                        player.getHouse().setHave_house(true);
-                        int wood = player.getWood() - 34;
-                        player.setWood(wood);
-                        System.out.println("You have a hut now! It's gonna be fantastic now!");
+                if(!time.isNight() || player.getTorch().isHave_torch()){
+                    // Checking if the player already has a house
+                    if(!player.getHouse().isHave_house()){
+                        // Checking if player has enough woods
+                        if(player.getWood() >= 32 && player.getClay() >= 12){
+                            // Sending the number of hours that the action takes
+                            doneSomething(34);
+                            // Make a shut and reduce the number of woods that the player has
+                            player.getHouse().setHave_house(true);
+                            int wood = player.getWood() - 34;
+                            player.setWood(wood);
+                            System.out.println("You have a hut now! It's gonna be fantastic now!");
+                        } else {
+                            System.out.println("You have not enough wood or clay!");
+                        }
                     } else {
-                        System.out.println("You have not enough wood or clay!");
+                        System.out.println("You already have a house!");
                     }
                 } else {
-                    System.out.println("You already have a house!");
+                    System.out.println("It's too dark! At times like this, I can only eat" +
+                            ", drink or sleep.");
                 }
                 break;
             // Discover
             case 11:
-                System.out.println("Not working yet!");
+                if(!time.isNight() || player.getTorch().isHave_torch()){
+                    Random rand = new Random();
+                    double calculate;
+                    // Store permanently data for the readability
+                    // Materials
+                    calculate = (island.getMaterial().getTree_number() - island.getMaterial().getKnow_tree_number()) * 0.4;
+                    int tree = (calculate > 0) ? rand.nextInt((int)(Math.ceil(calculate))) : 0; // tree: 50% max
+                    calculate = (island.getMaterial().getFruit_tree_number()-island.getMaterial().getKnow_fruit_tree_number())*0.2;
+                    int fruit_tree = (calculate > 0) ? rand.nextInt((int)Math.ceil(calculate)) : 0; // fruit tree: 30% max
+                    int water;
+                    if(island.getMaterial().getKnow_water_number() != island.getMaterial().getWater_number()){
+                        water = (rand.nextInt(5) < 1) ? 1 : 0; // water 25%
+                    } else {
+                        water = 0;
+                    }
+                    // Animals
+                    calculate = (island.getAnimal().getRabbit_number()-island.getAnimal().getKnow_rabbit())*0.2;
+                    int rabbit = (calculate > 0) ? rand.nextInt((int)Math.ceil(calculate)) : 0; // rabbit 20% max
+                    calculate = (island.getAnimal().getBear_number()-island.getAnimal().getKnow_bear())*0.1;
+                    int bear;
+                    if(island.getAnimal().getKnow_bear() != island.getAnimal().getBear_number()){
+                        bear = (rand.nextInt(5) < 1) ? 1 : 0; // bear 25%
+                    } else {
+                        bear = 0;
+                    }
+
+                    // Discover resources for the player
+                    island.getMaterial().setKnow_tree_number(island.getMaterial().getKnow_tree_number() + tree);
+                    System.out.println("You found " + tree + " tree!");
+                    island.getMaterial().setKnow_fruit_tree_number(island.getMaterial().getKnow_fruit_tree_number() + fruit_tree);
+                    System.out.println("You found " + fruit_tree + " fruit tree!");
+                    island.getMaterial().setKnow_water_number(island.getMaterial().getKnow_water_number() + water);
+                    System.out.println("You found " + water + " water source!");
+                    island.getAnimal().setKnow_rabbit(island.getAnimal().getKnow_rabbit() + rabbit);
+                    System.out.println("You found " + rabbit + " rabbit!");
+                    island.getAnimal().setKnow_bear(island.getAnimal().getKnow_bear() + bear);
+                    System.out.println("You found " + bear + " bear!");
+
+                    // Sending the number of hours that the action takes
+                    doneSomething(10);
+                } else {
+                    System.out.println("It's too dark! At times like this, I can only eat" +
+                            ", drink or sleep.");
+                }
+                break;
+            // Hunting
+            case 12:
+                // Checking if it's dark
+                if(!time.isNight() || player.getTorch().isHave_torch()){
+                    // Checking if the player discovered animal
+                    if(island.getAnimal().getKnow_rabbit() > 0 || island.getAnimal().getKnow_bear() > 0){
+                        int rabbit = island.getAnimal().getKnow_rabbit();
+                        int bear = island.getAnimal().getKnow_bear();
+                        Random rand = new Random();
+                        String bear_or_rabbit;
+                        if(bear != 0){
+                            bear_or_rabbit = (rand.nextInt(rabbit + bear) <= bear) ? "bear" : "rabbit";
+                        } else {
+                            bear_or_rabbit = "rabbit";
+                        }
+                        if(bear_or_rabbit.equals("rabbit")){
+                            System.out.println("I hunted a rabbit!");
+                            // Increase the number of raw meats that the player has by seven
+                            int raw_meat = player.getRaw_meat() + 7;
+                            player.setRaw_meat(raw_meat);
+                            // Decrease the number of rabbits on the island by one
+                            int rabbit_number = island.getAnimal().getRabbit_number() - 1;
+                            island.getAnimal().setRabbit_number(rabbit_number);
+                            // Also decrease the number of rabbits that the player know by one
+                            rabbit_number = island.getAnimal().getKnow_rabbit() - 1;
+                            island.getAnimal().setKnow_rabbit(rabbit_number);
+                            // Sending the number of hours that the action takes
+                            doneSomething(8);
+                        } else {
+                            System.out.println("It's a bear!!");
+                            // There is 70% percent to lose 45% health if the player does not have a spear
+                            // Also checking if the player has a spear
+                            // If the player has a spear, then there is just 35% chance to lose 45% health
+                            if(!player.getSpear().isHave_spear()){
+                                if(rand.nextInt(100) <= 70){
+                                    System.out.println("Aa.. It's so hurt! The bear broke my leg.. It almost killed me!");
+                                    System.out.println("I have to make a spear next time! ");
+                                    System.out.println("... or I just need to be more careful...");
+                                    System.out.println("Anyway, a tree accidentally fell on the bear, so I have meat.");
+                                    // Decrease the number of bears on the island by one
+                                    int bear_number = island.getAnimal().getBear_number() - 1;
+                                    island.getAnimal().setBear_number(bear_number);
+                                    // Decrease the number bears that the player know by one
+                                    bear_number = island.getAnimal().getKnow_bear() - 1;
+                                    island.getAnimal().setKnow_bear(bear_number);
+                                    // Increase the number of raw meats that the player has by 16
+                                    int raw_meat = player.getRaw_meat() + 16;
+                                    player.setRaw_meat(raw_meat);
+                                    // Decrease the player's health by 45%
+                                    int health = player.getHealth() - 45;
+                                    player.setHealth(health);
+                                    // Sending the number of hours that the action takes
+                                    doneSomething(8);
+                                } else {
+                                    System.out.println("A tree accidentally fell on the bear, so I have meat.");
+                                    System.out.println("What a luck! But have to make a spear next time! ");
+                                    System.out.println("... or I just need to be more careful...");
+                                    // Decrease the number of bears on the island by one
+                                    int bear_number = island.getAnimal().getBear_number() - 1;
+                                    island.getAnimal().setBear_number(bear_number);
+                                    // Decrease the number bears that the player know by one
+                                    bear_number = island.getAnimal().getKnow_bear() - 1;
+                                    island.getAnimal().setKnow_bear(bear_number);
+                                    // Increase the number of raw meats that the player has by 16
+                                    int raw_meat = player.getRaw_meat() + 16;
+                                    player.setRaw_meat(raw_meat);
+                                    // Sending the number of hours that the action takes
+                                    doneSomething(8);
+                                }
+                            } else {
+                                if(rand.nextInt(100) <= 35){
+                                    System.out.println("Aa.. It's so hurt! The bear broke my leg.. It almost killed me!");
+                                    System.out.println("But I managed to kill this bear!");
+                                    System.out.println("I need to be more careful next time...");
+                                    System.out.println("Anyway, I have meat!");
+                                    // Decrease the number of bears on the island by one
+                                    int bear_number = island.getAnimal().getBear_number() - 1;
+                                    island.getAnimal().setBear_number(bear_number);
+                                    // Decrease the number bears that the player know by one
+                                    bear_number = island.getAnimal().getKnow_bear() - 1;
+                                    island.getAnimal().setKnow_bear(bear_number);
+                                    // Increase the number of raw meats that the player has by 16
+                                    int raw_meat = player.getRaw_meat() + 16;
+                                    player.setRaw_meat(raw_meat);
+                                    // Decrease the player's health by 45%
+                                    int health = player.getHealth() - 45;
+                                    player.setHealth(health);
+                                    // Checking if the player's spear is broken
+                                    if(player.getSpear().isSpearBreaking()){
+                                        player.getSpear().setHave_spear(false);
+                                        System.out.println("My spear is broke. That's not good..");
+                                    }
+                                    // Sending the number of hours that the action takes
+                                    doneSomething(8);
+                                } else {
+                                    System.out.println("I killed the bear! That was easy...");
+                                    System.out.println("Maybe it was because a tree fell on it...");
+                                    System.out.println("I need to be more careful next time...");
+                                    System.out.println("Anyway, I have meat!");
+                                    // Decrease the number of bears on the island by one
+                                    int bear_number = island.getAnimal().getBear_number() - 1;
+                                    island.getAnimal().setBear_number(bear_number);
+                                    // Decrease the number bears that the player know by one
+                                    bear_number = island.getAnimal().getKnow_bear() - 1;
+                                    island.getAnimal().setKnow_bear(bear_number);
+                                    // Increase the number of raw meats that the player has by 16
+                                    int raw_meat = player.getRaw_meat() + 16;
+                                    player.setRaw_meat(raw_meat);
+                                    // Checking if the player's spear is broken
+                                    if(player.getSpear().isSpearBreaking()){
+                                        player.getSpear().setHave_spear(false);
+                                        System.out.println("My spear is broke. That's not good..");
+                                    }
+                                    // Sending the number of hours that the action takes
+                                    doneSomething(8);
+                                }
+                            }
+                        }
+                    } else {
+                        System.out.println("I have to discover an animal first!");
+                    }
+                } else {
+                    System.out.println("It's too dark! At times like this, I can only eat" +
+                            ", drink or sleep.");
+                }
+                break;
+            // Make a spear
+            case 13:
+                // Checking if the player has a spear
+                if(!player.getSpear().isHave_spear()){
+                    // Checking if the player have enough wood
+                    if(player.getWood() >= 4){
+                        System.out.println("I have a spear now!");
+                        // Sending the number of hours that the action takes
+                        doneSomething(1);
+                        // Give a spear to the player
+                        player.getSpear().setHave_spear(true);
+                        // Decrease the number of woods that the player has by 4
+                        int wood = player.getWood() - 4;
+                        player.setWood(wood);
+                    } else {
+                        System.out.println("I don't have enough wood!");
+                    }
+                } else {
+                    System.out.println("I already have a spear! I don't want another one...");
+                }
+                break;
+            // Make a rod
+            case 14:
+                // Checking if the player already has a rod
+                if(!player.getRod().isHave_rod()){
+                    // Checking if the player has enough wood for the rod
+                    if(player.getWood() >= 8){
+                        System.out.println("I made a rod! I can go fishing now!");
+                        // Sending the number of hours that the action takes
+                        doneSomething(8);
+                        // Give a rod to the player
+                        player.getRod().setHave_rod(true);
+                        // Decrease the number of woods that the player has by 8
+                        int wood = player.getWood();
+                        player.setWood(wood);
+                    }
+                } else {
+                    System.out.println("I already have a rod..");
+                }
+                break;
+            // Fishing
+            case 15:
+                // Checking if it's dark
+                if(!time.isNight() || player.getTorch().isHave_torch()){
+                    // Checking if the player has rod
+                    if(player.getRod().isHave_rod()){
+                        System.out.println("I like fishing! But I think I'm not good at it.. Maybe that's because" +
+                                " I managed to caught one fish in 8 hour...");
+                        // Sending the number of hours that the action takes
+                        doneSomething(8);
+                        // Give raw meat to the player
+                        int meat = player.getRaw_meat() + 1;
+                        player.setRaw_meat(meat);
+                        // Checking if the rod is broke
+                        if(player.getRod().isFishingRodBreaking()){
+                            player.getRod().setHave_rod(false);
+                            System.out.println("My rod is broke. I have to make another one.");
+                        }
+                    } else {
+                        System.out.println("Alright.. I want to go fishing.. But I have nothing to go fishing with!");
+                    }
+                } else {
+                    System.out.println("It's too dark! At times like this, I can only eat" +
+                            ", drink or sleep.");
+                }
+                break;
+            //
+            case 16:
                 break;
         }
     }

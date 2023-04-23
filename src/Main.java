@@ -59,6 +59,11 @@ public class Main {
                 System.out.print("\n<Enter>");
                 sc.nextLine();
             }
+            if(controller.isPlayerSaved()){
+                System.out.println("You have been saved by a ship!");
+            } else if(controller.isPlayerDead()){
+                System.out.println("You are dead...");
+            }
         } else {
             // If the answer is no, then quit
             System.exit(0);

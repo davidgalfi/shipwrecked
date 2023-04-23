@@ -14,11 +14,11 @@ public class Material{
 
     // getters and setters:
     // wood number
-    public int getWood_number() {
+    public int getTree_number() {
         return tree_number;
     }
-    public void setWood_number(int wood_number) {
-        this.tree_number = wood_number;
+    public void setTree_number(int tree_number) {
+        this.tree_number = tree_number;
     }
     // fruit wood number
     public int getFruit_tree_number() {
