@@ -216,12 +216,12 @@ public class Controller {
                             island.getMaterial().setKnow_tree_number(tree - 1);
                             tree = island.getMaterial().getTree_number();
                             island.getMaterial().setTree_number(tree - 1);
-                            System.out.println("\nYou cut down a tree! You collected 8 wood...");
+                            System.out.println("It was hard.. but I cut down that tree!");
                         } else {
-                            System.out.println("There is no tree left on the island!");
+                            System.out.println("I have a problem.. There is no tree left on the island!!!");
                         }
                     } else {
-                        System.out.println("\nYou did not discover trees!");
+                        System.out.println("\nI have to find a tree first..");
                     }
                 } else {
                     System.out.println("It's too dark! At times like this, I can only eat" +
@@ -230,40 +230,45 @@ public class Controller {
                 break;
             // Sleeping action
             case 2:
-                // Checking if player has any place to rest or just the ground
-                if (player.getHouse().isHave_house()) {
-                    // Sending the number of hours that the action takes
-                    doneSomething(8);
-                    // Set Fatigue 0, and give 35% health to the player
-                    System.out.println("\nYou slept fantastic! It was so comfortable! Can I sleep again? Fatigue: 0");
-                    player.setFatigue(0);
-                    int health = player.getHealth();
-                    player.setHealth((int) (health * 1.35));
-                } else if (player.getHut().isHave_hut()) {
-                    // Sending the number of hours that the action takes
-                    doneSomething(10);
-                    // Set Fatigue 0, and give 35% health to the player
-                    System.out.println("\nYou slept well! It was comfortable already! Let's go to work! Fatigue: 0");
-                    player.setFatigue(0);
-                    int health = player.getHealth();
-                    player.setHealth((int) (health * 1.35));
-                } else if (player.getShelter().isHave_shelter()) {
-                    // Sending the number of hours that the action takes
-                    doneSomething(12);
-                    // Set Fatigue 0, and give 35% health to the player
-                    System.out.println("\nYou slept quite well! " +
-                            "That was a bit comfortable than the ground, but not so much... Fatigue: 0");
-                    player.setFatigue(0);
-                    int health = player.getHealth();
-                    player.setHealth((int) (health * 1.35));
+                // Checking if player have to sleep
+                if(player.getFatigue() >= 15){
+                    // Checking if player has any place to rest or just the ground
+                    if (player.getHouse().isHave_house()) {
+                        // Sending the number of hours that the action takes
+                        doneSomething(8);
+                        // Set Fatigue 0, and give 35% health to the player
+                        System.out.println("\nI slept fantastic! It was so comfortable! I can take a snooze..");
+                        player.setFatigue(0);
+                        int health = player.getHealth();
+                        player.setHealth((int) (health * 1.35));
+                    } else if (player.getHut().isHave_hut()) {
+                        // Sending the number of hours that the action takes
+                        doneSomething(10);
+                        // Set Fatigue 0, and give 35% health to the player
+                        System.out.println("\nI slept well! It was comfortable already! Let's go to work!");
+                        player.setFatigue(0);
+                        int health = player.getHealth();
+                        player.setHealth((int) (health * 1.35));
+                    } else if (player.getShelter().isHave_shelter()) {
+                        // Sending the number of hours that the action takes
+                        doneSomething(12);
+                        // Set Fatigue 0, and give 35% health to the player
+                        System.out.println("\nI slept quite well! " +
+                                "That was a bit comfortable than the ground, but not so much...");
+                        player.setFatigue(0);
+                        int health = player.getHealth();
+                        player.setHealth((int) (health * 1.35));
+                    } else {
+                        // Sending the number of hours that the action takes
+                        doneSomething(14);
+                        // Set Fatigue 0, and give 35% health to the player
+                        System.out.println("\nIt was terrible to sleep on the ground...");
+                        player.setFatigue(0);
+                        int health = player.getHealth();
+                        player.setHealth((int) (health * 1.35));
+                    }
                 } else {
-                    // Sending the number of hours that the action takes
-                    doneSomething(14);
-                    // Set Fatigue 0, and give 35% health to the player
-                    System.out.println("\nYou slept! It was terrible to sleep on the ground... Fatigue: 0");
-                    player.setFatigue(0);
-                    int health = player.getHealth();
-                    player.setHealth((int) (health * 1.35));
+                    System.out.println("I'm not tired yet. Let's go back to work!");
                 }
                 break;
             // Mining clay
@@ -272,7 +277,7 @@ public class Controller {
                     // Checking if there is no clay left on the island
                     if (island.getMaterial().getClay_number() != 0) {
                         // Give clays to the player, and decrease the number of clays by one
-                        System.out.println("\nYou mined! You collected 5 clay");
+                        System.out.println("\nThat was horrible! But at least I found clays..");
                         int clay = player.getClay();
                         player.setClay(clay + 5);
                         clay = island.getMaterial().getClay_number();
@@ -280,7 +285,7 @@ public class Controller {
                         // Sending the number of hours that the action takes
                         doneSomething(2);
                     } else {
-                        System.out.println("There is no clay left on the island!");
+                        System.out.println("I have a problem.. There is no clay left on the island!!");
                     }
                 } else {
                     System.out.println("It's too dark! At times like this, I can only eat" +
@@ -295,17 +300,17 @@ public class Controller {
                     if (player.getWood() >= 1) {
                         // Give torch to the player
                         // and reduce the number of woods that the player has by one
-                        System.out.println("You have a torch now!");
+                        System.out.println("Yes! I can see now in the dark!");
                         player.getTorch().setHave_torch(true);
                         int wood = player.getWood() - 1;
                         player.setWood(wood);
                         // Sending the number of hours that the action takes
                         doneSomething(1);
                     } else {
-                        System.out.println("You have not enough wood!");
+                        System.out.println("I have not enough wood for that..");
                     }
                 } else {
-                    System.out.println("You already have a torch!");
+                    System.out.println("I don't want another torch, I already have one!");
                 }
                 break;
             // Make a fire
@@ -315,17 +320,17 @@ public class Controller {
                     // Checking if the player has woods
                     if (player.getWood() >= 2) {
                         // Make a fire and reduce the number of woods that the player has by two
-                        System.out.println("You have fire now!");
+                        System.out.println("Fire!! I have fire!!");
                         player.getFire().setFire_is_alive(true);
                         int wood = player.getWood() - 2;
                         player.setWood(wood);
                         // Sending the number of hours that the action takes
                         doneSomething(1);
                     } else {
-                        System.out.println("You have not enough wood!");
+                        System.out.println("I have not enough wood for that..");
                     }
                 } else {
-                    System.out.println("You already made a fire!");
+                    System.out.println("I already made a fire somewhere.. Maybe I just forgot where..");
                 }
                 break;
             // Drinking
@@ -339,7 +344,7 @@ public class Controller {
                         // Reduce the amount of water in the vessel
                         int water = player.getVessel().getWater_filled() - 1;
                         player.getVessel().setWater_filled(water);
-                        System.out.println("You drunk!");
+                        System.out.println("It's better now. Thanks for me!");
                         System.out.printf("Vessel: " + water + "/4");
                         // Reduce the player's thirst to 0
                         player.setThirst(0);
@@ -354,14 +359,14 @@ public class Controller {
                         if (player.getVessel().isHave_vessel()) {
                             // Fill the vessel with water
                             player.getVessel().setWater_filled(4);
-                            System.out.println("You drank and even you filled your vessel with water fully!");
+                            System.out.println("I drank and even I fully filled my vessel with water!");
                             System.out.println("You filled your vessel! Vessel: 4/4");
                         } else {
-                            System.out.println("You drank! Maybe you could make a vessel for next time!");
+                            System.out.println("It's better now!But maybe I could make a vessel for next time!");
                         }
                     }
                 } else {
-                    System.out.println("You don't have to drink!");
+                    System.out.println("I don't really have to drink, thanks by me.");
                 }
                 break;
             // Make a vessel
@@ -377,18 +382,18 @@ public class Controller {
                             player.getVessel().setHave_vessel(true);
                             int clay = player.getClay() - 2;
                             player.setClay(clay);
-                            System.out.println("Now you have a vessel!");
-                            System.out.println("You have to fill that with water before you use!");
+                            System.out.println("Now I have a vessel!");
+                            System.out.println("I have to fill that with water before I use!");
                             // Sending the number of hours that the action takes
                             doneSomething(1);
                         } else {
-                            System.out.println("You have not made a fire yet!");
+                            System.out.println("I need fire for that..");
                         }
                     } else {
-                        System.out.println("You don't have enough clay!");
+                        System.out.println("I don't have enough clay..");
                     }
                 } else {
-                    System.out.println("You already have a vessel!");
+                    System.out.println("I like my vessel, already have one!");
                 }
                 break;
             // Make a shelter
@@ -402,14 +407,14 @@ public class Controller {
                             player.getShelter().setHave_shelter(true);
                             int wood = player.getWood() - 12;
                             player.setWood(wood);
-                            System.out.println("You have a shelter now! It's gonna be a bit conformable...");
+                            System.out.println("I have a shelter now! It's gonna be a bit conformable...");
                             // Sending the number of hours that the action takes
                             doneSomething(12);
                         } else {
-                            System.out.println("You have not enough wood!");
+                            System.out.println("I have not enough wood for that..");
                         }
                     } else {
-                        System.out.println("You already have a shelter!");
+                        System.out.println("I already have a shelter.. What could I do with two?");
                     }
                 } else {
                     System.out.println("It's too dark! At times like this, I can only eat" +
@@ -427,14 +432,14 @@ public class Controller {
                             player.getHut().setHave_hut(true);
                             int wood = player.getWood() - 32;
                             player.setWood(wood);
-                            System.out.println("You have a hut now! It's gonna be conformable now!");
+                            System.out.println("I have a hut now! It's gonna be conformable now!");
                             // Sending the number of hours that the action takes
                             doneSomething(26);
                         } else {
-                            System.out.println("You have not enough wood!");
+                            System.out.println("I have not enough wood for that.. yet!");
                         }
                     } else {
-                        System.out.println("You already have a hut!");
+                        System.out.println("I already have a hut.. But where?");
                     }
                 } else {
                     System.out.println("It's too dark! At times like this, I can only eat" +
@@ -448,18 +453,18 @@ public class Controller {
                     if (!player.getHouse().isHave_house()) {
                         // Checking if player has enough woods
                         if (player.getWood() >= 32 && player.getClay() >= 12) {
-                            // Make a shut and reduce the number of woods that the player has
+                            // Make a house and reduce the number of woods that the player has
                             player.getHouse().setHave_house(true);
                             int wood = player.getWood() - 34;
                             player.setWood(wood);
-                            System.out.println("You have a house now! It's gonna be fantastic now!");
+                            System.out.println("I have a big-big house now! It's gonna be fantastic now!");
                             // Sending the number of hours that the action takes
                             doneSomething(34);
                         } else {
-                            System.out.println("You have not enough wood or clay!");
+                            System.out.println("Noo.. I have to find more clay!");
                         }
                     } else {
-                        System.out.println("You already have a house!");
+                        System.out.println("No.. I already have a house. I can see that anywhere, because it is so big! Or I think so..");
                     }
                 } else {
                     System.out.println("It's too dark! At times like this, I can only eat" +
@@ -495,16 +500,18 @@ public class Controller {
                     }
 
                     // Discover resources for the player
+                    System.out.println("So.. What did I find:");
                     island.getMaterial().setKnow_tree_number(island.getMaterial().getKnow_tree_number() + tree);
-                    System.out.println("You found " + tree + " tree!");
+                    System.out.println("I found " + tree + " tree!");
                     island.getMaterial().setKnow_fruit_tree_number(island.getMaterial().getKnow_fruit_tree_number() + fruit_tree);
-                    System.out.println("You found " + fruit_tree + " fruit tree!");
+                    System.out.println("I found " + fruit_tree + " fruit tree!");
                     island.getMaterial().setKnow_water_number(island.getMaterial().getKnow_water_number() + water);
-                    System.out.println("You found " + water + " water source!");
+                    System.out.println("I found " + water + " water source!");
                     island.getAnimal().setKnow_rabbit(island.getAnimal().getKnow_rabbit() + rabbit);
-                    System.out.println("You found " + rabbit + " rabbit!");
+                    System.out.println("I found " + rabbit + " rabbit!");
                     island.getAnimal().setKnow_bear(island.getAnimal().getKnow_bear() + bear);
-                    System.out.println("You found " + bear + " bear!");
+                    System.out.println("I found " + bear + " bear!");
+                    System.out.println("Hmm.. not much..");
 
                     // Sending the number of hours that the action takes
                     doneSomething(10);
