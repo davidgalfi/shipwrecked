@@ -1,6 +1,6 @@
-package modell.Island;
+package model.Island;
 
-import modell.Island.Animal.Animal;
+import model.Island.Animal.Animal;
 
 import java.util.Random;
 
@@ -14,8 +14,8 @@ public class Island {
     // generated sources looks like:
     /*1) bears number [min = 4, max = 20]
     * 2) rabbits number [min = 10, max = 30]
-    * 3) woods number [min = 15, max = 40]
-    * 4) fruit woods number [ min = 3, max = 20]
+    * 3) tree number [min = 15, max = 40]
+    * 4) fruit tree number [ min = 5, max = 20]
     * 5) waters number [min = 0, max = 3]
     * 6) clays number[min = 5, max = 20]*/
     public Island(){
@@ -25,8 +25,8 @@ public class Island {
         // set the real number of sources
         animal.setBear_number(rand.nextInt(17) + 4);
         animal.setRabbit_number(rand.nextInt(21) + 10);
-        material.setWood_number(rand.nextInt(26) + 15);
-        material.setFruit_tree_number(rand.nextInt(18) + 3);
+        material.setTree_number(rand.nextInt(26) + 15);
+        material.setFruit_tree_number(rand.nextInt(16) + 5);
         material.setWater_number(rand.nextInt(4));
         material.setClay_number(rand.nextInt(16) + 5);
 

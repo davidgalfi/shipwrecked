@@ -1,4 +1,4 @@
-package modell.Player.Building;
+package model.Player.Building;
 
 public class Fire extends Building{
     private int fire_alive_time;

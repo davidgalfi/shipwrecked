@@ -1,4 +1,4 @@
-package modell.Island.Animal;
+package model.Island.Animal;
 
 public class Animal {
     // How many are of them in the island
