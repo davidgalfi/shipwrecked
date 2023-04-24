@@ -4,13 +4,13 @@ import java.util.Scanner;
 
 public class Main {
     // Checking the input that the player given
-    public static boolean isGoodNumber(String number){
+    public static boolean isGoodNumber(String number, int from, int to){
         int converted_number;
         // If it is not a number, then return false
         try {
             converted_number = Integer.parseInt(number);
             // Checking the number if it is between 0 and 22
-            return converted_number <= 22 && converted_number >= 0;
+            return converted_number <= to && converted_number >= from;
         } catch (NumberFormatException e){
             return false;
         }
@@ -43,7 +43,6 @@ public class Main {
             sc.nextLine();
             // Writing the action that player can make
             controller.whatPlayerCanDo();
-            // int index = 0; -- just for testing
             // Begin the game
             // Check the player health and the saving ship
             while(!controller.isPlayerDead() && !controller.isPlayerSaved()){
@@ -52,18 +51,26 @@ public class Main {
                     controller.detailsWrite();
                     System.out.print("\n\nWhat do you do: ");
                     answer = sc.nextLine();
-                }while(!isGoodNumber(answer));
-                // Start an action by the answer given to the controller
-                controller.playerDoSomething(answer);
+                }while(!isGoodNumber(answer, 0, 22));
+                // Checking if player chose to eat
+                if(Integer.parseInt(answer) == 19){
+                    do {
+                        System.out.println("\nFruit(1) -- decrease the hunger by 5");
+                        System.out.println("Raw meat(2) -- decrease the hunger by 8");
+                        System.out.println("Roast meat(3) -- decrease the hunger by 16");
+                        System.out.print("\nWhat do you want to eat: ");
+                        answer = sc.nextLine();
+                    } while(!isGoodNumber(answer, 1, 3));
+                    controller.playerWantToEat(answer);
+                } else {
+                    // Start an action by the answer given to the controller
+                    controller.playerDoSomething(answer);
+                }
                 // Press enter to continue
                 System.out.print("\n<Enter>");
                 sc.nextLine();
             }
-            if(controller.isPlayerSaved()){
-                System.out.println("You have been saved by a ship!");
-            } else if(controller.isPlayerDead()){
-                System.out.println("You are dead...");
-            }
+            controller.endOfTheGame();
         } else {
             // If the answer is no, then quit
             System.exit(0);

@@ -31,8 +31,12 @@ public class Player {
     private int fruit;
     private int raw_meat;
     private int roast_meat;
-    // player saved:
+    // end of the player:
     private boolean player_saved;
+    private boolean player_dead;
+    private boolean player_hunger_dead;
+    private boolean player_thirst_dead;
+
 
     // constructor:
     public Player(){
@@ -50,11 +54,14 @@ public class Player {
         setHunger(5); // 5
         setStarving(false); // false
         setClay(0); // 0
-        setWood(100); // 0 // test: 100
+        setWood(0); // 0
         setFruit(1); // 1
         setRaw_meat(0); // 0
         setRoast_meat(1); // 1
         setPlayer_saved(false); // false
+        setPlayer_dead(false);
+        setPlayer_hunger_dead(false);
+        setPlayer_thirst_dead(false);
     }
 
     // getters and setters
@@ -122,7 +129,8 @@ public class Player {
         return fatigue;
     }
     public void setFatigue(int fatigue) {
-        this.fatigue = fatigue;
+        if(fatigue > 100)this.fatigue = 100;
+        else this.fatigue = Math.max(fatigue, 0);
     }
     // health:
     public int getHealth() {
@@ -136,14 +144,16 @@ public class Player {
         return hunger;
     }
     public void setHunger(int hunger) {
-        this.hunger = hunger;
+        if(hunger > 100)this.hunger = 100;
+        else this.hunger = Math.max(hunger, 0);
     }
     // thirst:
     public int getThirst() {
         return thirst;
     }
     public void setThirst(int thirst) {
-        this.thirst = thirst;
+        if(thirst > 100)this.thirst = 100;
+        else this.thirst = Math.max(thirst, 0);
     }
     // starving:
     public boolean isStarving() {
@@ -193,11 +203,33 @@ public class Player {
         this.hunger = hunger;
         this.thirst = thirst;
     }
+    // Final output:
     // player saved:
     public boolean isPlayer_saved() {
         return player_saved;
     }
     public void setPlayer_saved(boolean player_saved) {
         this.player_saved = player_saved;
+    }
+    // player dead:
+    public boolean isPlayer_dead() {
+        return player_dead;
+    }
+    public void setPlayer_dead(boolean player_dead) {
+        this.player_dead = player_dead;
+    }
+    // hunger dead:
+    public boolean isPlayer_hunger_dead() {
+        return player_hunger_dead;
+    }
+    public void setPlayer_hunger_dead(boolean player_hunger_dead) {
+        this.player_hunger_dead = player_hunger_dead;
+    }
+    // thirst dead:
+    public boolean isPlayer_thirst_dead() {
+        return player_thirst_dead;
+    }
+    public void setPlayer_thirst_dead(boolean player_thirst_dead) {
+        this.player_thirst_dead = player_thirst_dead;
     }
 }

@@ -11,11 +11,15 @@ public class Viewer {
     // begin the game:
     public void beginTheGame(){
         // game description:
-        System.out.println("\n\nThis is a survival console game. Everything what you could do is will be on the screen. \n" +
-                "Every action you make cost time. You will be more thirstier, hungrier and so on by time. \nBe carefull, if any condition is reach 40%, " +
-                "you lose 5% health in every hour. \nYour condition also increase 1% in every hour. If your health is reached 0%, then you lose. " +
-                "\n In the beginning you don't know how many sources really on the Island, you know just a small part of it. You have to discover materials and animals" +
-                " to be able to do things with them.");
+        System.out.println("\n\nThis is a survival console game. Things you should know before playing:\n" +
+                "- Every action you make cost you hours. You will be more thirstier, hungrier and so on by time.\n" +
+                "- Watch carefully to your health bar: If your health bar reaches the 0%, then you will lose the game.\n" +
+                "- You also can lose by letting your character's hunger or thirst reach 100%\n" +
+                "- If any condition reaches 40%, than you lose 1% health in every hour\n" +
+                "- You can do many things but some conditions has some price or condition, for example:\n" +
+                "You have to discover materials and animals to make action with them\n" +
+                "- You can win the game if a saver ship save you. The change by that is 0.5% in every day at 10 hour.\n" +
+                "- In the end of the game you will see your elapsed time of your survival on the island");
         // set the character's name:
         System.out.print("\nSet your character's name: ");
     }
@@ -43,7 +47,7 @@ public class Viewer {
         System.out.println("Cut tree(1): 8 hour - need known tree - get 10 wood");
         System.out.println("Sleeping(2): 14 hour - fatigue: 0 and gain 35% health");
         System.out.println("Mining(3): 2 hour - get 5 clay from one");
-        System.out.println("Torch making(4): 1 hour - need 1 wood - night has no effect");
+        System.out.println("Torch making(4): 1 hour - need 1 wood - night has no effect on you");
         System.out.println("Make fire(5): 1 hour - need 2 wood - lasts for 24 hour");
         System.out.println("Drink(6): if you have vessel 0 hour, otherwise 4 hour -- thirst gets down by 10");
         System.out.println("Make vessel(7): 1 hour - need 2 clay and fire - you can drink without time cost");
@@ -63,9 +67,30 @@ public class Viewer {
         System.out.println("Plant fruit tree(21): 8 hour - need 1 fruit - in 8 days there be a new fruit tree");
         System.out.println("Cut fruit tree(22): 8 hour - get 7 wood");
         System.out.println("..........................................................................................");
-        System.out.println("Enter the number of action you want to perform... the action number is between:'()'...");
+        System.out.println("Enter the number of the action you want to perform... the action number is between:'()'...");
         System.out.println("..........................................................................................");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    }
+    public void endOfTheGame(int end_number, int day, int hour){
+        switch(end_number){
+            // Saved
+            case 1:
+                System.out.println("You saved by a ship!");
+                break;
+            // Killed by hunger
+            case 2:
+                System.out.println("You starved to death!");
+                break;
+            // Killed by thirst
+            case 3:
+                System.out.println("You died of thirst!");
+                break;
+            // Killed by the lack of immune system
+            case 4:
+                System.out.println("You died from a weak immune system!");
+                break;
+        }
+        System.out.println("The number of time you survived on the island: " + day + " days and " + hour + " hours.");
     }
 
 }
