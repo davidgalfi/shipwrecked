@@ -17,6 +17,8 @@ public class Torch extends Tool{
         return torch_new_day;
     }
     public void setTorch_new_day(boolean torch_new_day) {
-        this.torch_new_day = torch_new_day;
+        if(have_torch){
+            this.torch_new_day = torch_new_day;
+        }
     }
 }

@@ -30,7 +30,7 @@ public class Controller {
     public void detailsWrite(){viewer.detailsWrite(player.getHealth(), player.getFatigue(), player.getThirst(), player.getHunger(), player.isStarving(),
             island.getMaterial().getKnow_tree_number(), island.getMaterial().getKnow_fruit_tree_number(), island.getMaterial().getKnow_water_number(),
             island.getAnimal().getKnow_bear(), island.getAnimal().getKnow_rabbit(), player.getWood(), player.getClay(), player.getFruit(), player.getRaw_meat(),
-            player.getRoast_meat(), time.getTime_now());}
+            player.getRoast_meat(), time.getTime_now(), time.getElapsed_days());}
         // Action that player can make:
     public void whatPlayerCanDo(){viewer.whatPlayerCanDo();}
         // End of the game:
@@ -53,7 +53,7 @@ public class Controller {
                     int little_tree = island.getLittle_tree()[k];
                     if(little_tree != -1){
                         // Checking if any little tree is 8 days old
-                        if(little_tree == 8){
+                        if(little_tree == 8-1){
                             System.out.println("A little tree is now a big adult tree!");
                             // Empty the place
                             island.setLittle_tree(k, -1);
@@ -86,7 +86,7 @@ public class Controller {
                     int little_fruit_tree = island.getLittle_fruit_tree()[k];
                     if(little_fruit_tree != -1){
                         // Checking if any little fruit tree is 8 days old
-                        if(little_fruit_tree == 8){
+                        if(little_fruit_tree == 8-1){
                             System.out.println("A little fruit tree is now a big adult tree!");
                             // Empty the place
                             island.setLittle_fruit_tree(k, -1);
@@ -119,7 +119,7 @@ public class Controller {
                     int little_rabbit = island.getLittle_rabbit()[k];
                     if(little_rabbit != -1){
                         // Checking if any little rabbit is 6 days old
-                        if(little_rabbit == 6){
+                        if(little_rabbit == 6-1){
                             System.out.println("A little rabbit is now a big adult rabbit!");
                             // Empty the place
                             island.setLittle_rabbit(k, -1);
@@ -149,11 +149,15 @@ public class Controller {
          player.setPlayer_dead(player.getHealth() <= 0);
          return player.isPlayer_dead();
     }
-    // Looking for a saving ship
+    // is player saved:
     public boolean isPlayerSaved(){
+        return player.isPlayer_saved();
+    }
+    // Looking for a saving ship
+    public boolean setPlayerSaved(){
         if((time.getTime_now() == 10 || (time.isNew_day() && time.getTime_now() >= 10)) && !player.isPlayer_saved()){
             time.setNew_day(false);
-            player.setPlayer_saved(Math.random() * 1000 <= 5);
+            player.setPlayer_saved(Math.random() * 1000 <= 5); // 0.5%
         }
         return player.isPlayer_saved();
     }
@@ -247,8 +251,8 @@ public class Controller {
                         // Set Fatigue 0, and give 35% health to the player
                         System.out.println("\nI slept well! It was comfortable already! Let's go to work!");
                         player.setFatigue(0);
-                        int health = player.getHealth();
-                        player.setHealth((int) (health * 1.35));
+                        int health = player.getHealth() + 35;
+                        player.setHealth(health);
                     } else if (player.getShelter().isHave_shelter()) {
                         // Sending the number of hours that the action takes
                         doneSomething(12);
@@ -349,12 +353,12 @@ public class Controller {
                         // Reduce the player's thirst to 0
                         player.setThirst(0);
                     } else {
-                        // Sending the number of hours that the action takes
-                        doneSomething(0);
                         // Reduce the player's thirst to 0
                         player.setThirst(0);
                         // Sending the number of hours that the action takes
                         doneSomething(4);
+                        // Reduce the player's thirst to 0
+                        player.setThirst(0);
                         // Checking if player have vessel just the vessel is not filled with water
                         if (player.getVessel().isHave_vessel()) {
                             // Fill the vessel with water
@@ -491,7 +495,6 @@ public class Controller {
                     // Animals
                     calculate = (island.getAnimal().getRabbit_number() - island.getAnimal().getKnow_rabbit()) * 0.2;
                     int rabbit = (calculate > 0) ? rand.nextInt((int) Math.ceil(calculate)) : 0; // rabbit 20% max
-                    calculate = (island.getAnimal().getBear_number() - island.getAnimal().getKnow_bear()) * 0.1;
                     int bear;
                     if (island.getAnimal().getKnow_bear() != island.getAnimal().getBear_number()) {
                         bear = (rand.nextInt(5) < 1) ? 1 : 0; // bear 25%
@@ -760,7 +763,7 @@ public class Controller {
                                     island.setLittle_rabbit(k, 0);
                                     System.out.println("I think it works. I come back later..");
                                     int rabbit_number = island.getLittle_rabbit_number() + 1;
-                                    island.setLittle_tree_number(rabbit_number);
+                                    island.setLittle_rabbit_number(rabbit_number);
                                     break;
                                 }
                             }
@@ -903,6 +906,7 @@ public class Controller {
     public void torchBroke(){
         if(player.getTorch().isHave_torch()){
             if(player.getTorch().isTorch_new_day() && !time.isNight()){
+                player.getTorch().setTorch_new_day(false);
                 player.getTorch().setHave_torch(false);
                 System.out.println("Your torch is broke!");
             }
@@ -995,6 +999,7 @@ public class Controller {
             plantedTreeChecking();
             plantedFruitTreeChecking();
             bredRabbitChecking();
+            setPlayerSaved();
         } else {
             time.setTime_now(time_now);
         }
@@ -1014,4 +1019,6 @@ public class Controller {
 
     public void setTimeTo10(){time.setTime_now(10);}
     public void setPlayerHungerTo0(){player.setHunger(0);}
+    public void setPlayerThirstTo0(){player.setThirst(0);}
+    public void setPlayerFatigueTo0(){player.setFatigue(0);}
 }

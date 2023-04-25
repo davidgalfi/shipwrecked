@@ -30,9 +30,10 @@ public class Viewer {
     }
     // printing details:
     public void detailsWrite(int health, int fatigue, int thirst, int hunger, boolean starving, int wood, int fruit, int water, int bear, int rabbit,
-                             int kwood, int kclay, int kfruit, int kraw_meat, int kroast_meat, int time){
+                             int kwood, int kclay, int kfruit, int kraw_meat, int kroast_meat, int hours, int days){
         System.out.println("\n\n--------------------------------------------------------------------------------------------------------");
-        System.out.println("Time: " + time
+        System.out.println("Days: " + days
+                + "\nTime: " + hours
                 + "\n* Condition:" + "\t\tHealth: " + health + "\t\tHunger: " + hunger + "\t\tThirst: " + thirst
                 + "\t\tFatigue: " + fatigue + "\t\tStarving: " + ((starving) ? "True" : "False")
                 + "\n* Sources:  " + "\t\tWoods: " + kwood + "\t\tClays: " + kclay + "\t\tFruits: " + kfruit + "\t\tRaw meats: " + kraw_meat + "\tRoast meat: " + kroast_meat
@@ -49,14 +50,14 @@ public class Viewer {
         System.out.println("Mining(3): 2 hour - get 5 clay from one");
         System.out.println("Torch making(4): 1 hour - need 1 wood - night has no effect on you");
         System.out.println("Make fire(5): 1 hour - need 2 wood - lasts for 24 hour");
-        System.out.println("Drink(6): if you have vessel 0 hour, otherwise 4 hour -- thirst gets down by 10");
+        System.out.println("Drink(6): if you have vessel: 0 hour, otherwise: 4 hour -- thirst gets down by 10");
         System.out.println("Make vessel(7): 1 hour - need 2 clay and fire - you can drink without time cost");
         System.out.println("Make shelter(8): 12 hour - need 14 wood - sleeping cost 12 hour");
         System.out.println("Make hut(9): 26 hour - need 32 wood - sleeping cost 10 hour");
         System.out.println("Make house(10): 34 hour - need 32 wood and 12 clay - sleeping cost 8 hour");
         System.out.println("Discover(11): 10 hour - Chance to find materials and resources");
         System.out.println("Hunting(12): 8 hour - get raw meat");
-        System.out.println("Make spear(13): 1 hour - need 4 wood - less harder to kill bears");
+        System.out.println("Make spear(13): 1 hour - need 4 wood - easier to kill bears");
         System.out.println("Make rod(14): 1 hour - need 8 wood");
         System.out.println("Fishing(15): 8 hour - need a rod - get 1 raw meat");
         System.out.println("Plant tree(16): 4 hour - need 1 wood - in 8 days you can cut that tree");
