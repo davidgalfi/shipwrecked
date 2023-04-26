@@ -845,10 +845,7 @@ public class Controller {
                                     island.setLittle_fruit_tree_number(tree_number);
                                     break;
                                 }
-                            }
-                            // Decrease the number of woods that the player has by 1
-                            int wood = player.getWood() - 1;
-                            player.setWood(wood);
+                            }                        
                             // Sending the number of hours that the action takes
                             doneSomething(8);
                         } else {
