@@ -213,9 +213,9 @@ public class Controller {
                         if (island.getMaterial().getTree_number() != 0) {
                             // Sending the number of hours that the action takes
                             doneSomething(8);
-                            // Changing the number of trees on the island and give woods to the player
-                            int wood = player.getWood();
-                            player.setWood(wood + 8);
+                            // Changing the number of trees on the island and give woods to the player by 10
+                            int wood = player.getWood() + 10;
+                            player.setWood(wood);
                             int tree = island.getMaterial().getKnow_tree_number();
                             island.getMaterial().setKnow_tree_number(tree - 1);
                             tree = island.getMaterial().getTree_number();
