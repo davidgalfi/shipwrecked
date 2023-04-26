@@ -65,11 +65,7 @@ public class Main {
                 } else {
                     // Start an action by the answer given to the controller
                     controller.playerDoSomething(answer);
-                }
-                // ---------TEST--------
-                controller.setPlayerHungerTo0();
-                controller.setPlayerFatigueTo0();
-                controller.setPlayerThirstTo0();
+                }              
                 // Press enter to continue
                 System.out.print("\n<Enter>");
                 sc.nextLine();
