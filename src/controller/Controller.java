@@ -210,7 +210,7 @@ public class Controller {
                     // Checking if the player knows which tree to cut.
                     if (island.getMaterial().getKnow_tree_number() > 0) {
                         // Checking if there is no tree left on the island --> not necessary by the way...
-                        if (island.getMaterial().getTree_number() != 0) {
+                        if (island.getMaterial().getTree_number() > 0) {
                             // Sending the number of hours that the action takes
                             doneSomething(8);
                             // Changing the number of trees on the island and give woods to the player by 10
@@ -755,8 +755,8 @@ public class Controller {
                 if (island.getLittle_rabbit_number() != 20) {
                     // Checking if it's dark
                     if (!time.isNight() || player.getTorch().isHave_torch()) {
-                        // Checking if the player has known rabbits
-                        if (island.getAnimal().getKnow_rabbit() > 0) {
+                        // Checking if the player has 2 known rabbits
+                        if (island.getAnimal().getKnow_rabbit() >= 2) {
                             // Breed a rabbit
                             for (int k = 0; k < island.getLittle_rabbit().length; k++) {
                                 if (island.getLittle_rabbit()[k] == -1) {
